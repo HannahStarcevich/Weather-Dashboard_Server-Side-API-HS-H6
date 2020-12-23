@@ -1,8 +1,8 @@
 # Weather-Dashboard_Server-Side-API-HS-H6
 This site uses a third party API to display a dashboard of weather data for select cities.
 
-This site: 
-My GitHub: 
+This site: https://hannahstarcevich.github.io/Weather-Dashboard_Server-Side-API-HS-H6/
+My GitHub: https://github.com/HannahStarcevich/Weather-Dashboard_Server-Side-API-HS-H6
 
 APIs used in this project: 
 [1] Open Weather https://openweathermap.org/
