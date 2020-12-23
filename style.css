@@ -1,0 +1,35 @@
+body {
+    background: salmon;
+}
+
+h1 {
+    text-align: center;
+}
+
+.container-2 {
+    display: flex;
+}
+
+#today {
+    margin-bottom: 2.5%;
+}
+
+#forecast2 {
+    margin-left: 20%;
+
+}
+
+#forecast3 {
+    margin-left: 40%;
+
+}
+
+#forecast4 {
+    margin-left: 60%;
+
+}
+
+#forecast5 {
+    margin-left: 80%;
+
+}
