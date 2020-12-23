@@ -9,6 +9,12 @@ var citiesInLocalStorage = localStorage.getItem("cities")
 if (citiesInLocalStorage) {
     cityArray = JSON.parse(citiesInLocalStorage)
 }
+// display cities recently searched from local storage
+displayCityName = 1
+for (var i = 0; i < 8; i++) {
+    $("#city" + displayCityName).text(cityArray[i])
+    displayCityName++
+}
 
 // search for a city
 $("#searchBtn").on("click", function () {
@@ -49,6 +55,15 @@ function displayCurrentWeather(response) {
     console.log(city);
     $("#cityNameAndDate").text(`${response.city.name} ${moment().format("MMM Do, YYYY, HH:mm")}`);
 
+    // identify the weather icon code, put it in the url to source the image icon and display on page
+    var imgIcon = response.list[0].weather[0].icon
+    var imgUrl = `http://openweathermap.org/img/wn/${imgIcon}@2x.png`
+    var weatherImage = $("<img>")
+    weatherImage.attr("src", imgUrl)
+    weatherImage.attr("alt", "weather icon")
+    $("#image").empty()
+    $("#image").append(weatherImage)
+
     // Current stats and temperature calculation
     var tempF = Math.floor((response.list[0].main.temp - 273.15) * 1.80 + 32);
     $("#temperature").text("Temperature: " + tempF + " F");
@@ -77,8 +92,5 @@ function displayCurrentWeather(response) {
 
         card++
         day++
-
-
     }
-
 }
