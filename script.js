@@ -3,25 +3,43 @@ var queryURL = ""
 var city = ""
 var cityArray = []
 
-// import the array of searched cities
+// import the array of searched cities from local storage
 var citiesInLocalStorage = localStorage.getItem("cities")
 // if there is an array it will automatically return as true, and we will make the city array equal to the array in local storage, take whats in local storage and parse into an array
 if (citiesInLocalStorage) {
     cityArray = JSON.parse(citiesInLocalStorage)
+    updateRecentSearches()
 }
+
+// display last city searched on page load
+var lastCitySearch = cityArray[cityArray.length - 1]
+$.ajax({
+        url: `https://api.openweathermap.org/data/2.5/forecast?q=${lastCitySearch}&appid=${APIKey}`,
+        method: "GET"
+    })
+    .then(function (response) {
+        console.log(response);
+        displayCurrentWeather(response)
+    });
+
 // display cities recently searched from local storage
-displayCityName = 1
-for (var i = 0; i < 8; i++) {
-    $("#city" + displayCityName).text(cityArray[i])
-    displayCityName++
+function updateRecentSearches() {
+    $("#citiesSearched").empty()
+    for (var i = 1; i < 11; i++) {
+        console.log(cityArray[cityArray.length - [i]])
+        var displayCities = $("<p>").text(cityArray[cityArray.length - [i]])
+        $("#citiesSearched").append(displayCities)
+    }
 }
+
 
 // search for a city
 $("#searchBtn").on("click", function () {
     city = $(".searchInput")
         .val()
         .trim();
-
+    // $.empty()
+    //add the new city to the city array
     cityArray.push(city)
 
     localStorage.setItem("cities", JSON.stringify(cityArray))
@@ -36,20 +54,10 @@ $("#searchBtn").on("click", function () {
             console.log(response);
             displayCurrentWeather(response)
         });
+    updateRecentSearches()
 })
 
-// display last city searched on page load
-var lastCitySearch = cityArray[cityArray.length - 1]
-$.ajax({
-        url: `https://api.openweathermap.org/data/2.5/forecast?q=${lastCitySearch}&appid=${APIKey}`,
-        method: "GET"
-    })
-    .then(function (response) {
-        console.log(response);
-        displayCurrentWeather(response)
-    });
-
-// pull weather stats and show on the site
+// pull new weather stats and show on the site
 function displayCurrentWeather(response) {
     // $("#cityNameAndDate").empty()
     console.log(city);
