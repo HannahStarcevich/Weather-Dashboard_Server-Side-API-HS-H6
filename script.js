@@ -26,24 +26,28 @@ $.ajax({
 function updateRecentSearches() {
     $("#citiesSearched").empty()
     for (var i = 1; i < 11; i++) {
-        console.log(cityArray[cityArray.length - [i]])
-        var displayCities = $("<p>").text(cityArray[cityArray.length - [i]])
+        var recentCity = cityArray[cityArray.length - [i]]
+        var displayCities = $("<button>")
+        displayCities.addClass("buttonCity btn btn-outline-dark")
+        displayCities.attr("data-city", recentCity)
+        console.log(recentCity);
+        displayCities.text(recentCity)
         $("#citiesSearched").append(displayCities)
+
     }
 }
 
+$(document).on("click", ".buttonCity", function () {
 
-// search for a city
-$("#searchBtn").on("click", function () {
-    city = $(".searchInput")
-        .val()
-        .trim();
-    // $.empty()
-    //add the new city to the city array
-    cityArray.push(city)
+    var grabRecentCityClicked = $(this).attr("data-city")
+    city = grabRecentCityClicked
+    citySearchAPI(grabRecentCityClicked)
 
-    localStorage.setItem("cities", JSON.stringify(cityArray))
+})
 
+
+// search a city
+function citySearchAPI() {
     queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${APIKey}`
 
     $.ajax({
@@ -55,7 +59,35 @@ $("#searchBtn").on("click", function () {
             displayCurrentWeather(response)
         });
     updateRecentSearches()
+
+}
+
+$("#searchForm").submit(function (event) {
+    event.preventDefault();
+    searchEngine();
 })
+
+$("#searchBtn").on("click", function () {
+    searchEngine();
+})
+
+// input & search for a new city
+function searchEngine() {
+    city = $(".searchInput")
+        .val()
+        .trim();
+
+    if (city) {
+        //add the new city to the city array & sale to local storage
+        cityArray.push(city)
+        localStorage.setItem("cities", JSON.stringify(cityArray))
+    }
+
+    // call the function to search the new city in the API
+    citySearchAPI()
+
+    $(".searchInput").val("")
+}
 
 // pull new weather stats and show on the site
 function displayCurrentWeather(response) {

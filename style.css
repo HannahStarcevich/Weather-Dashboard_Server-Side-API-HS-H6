@@ -14,26 +14,13 @@ h1 {
     margin-bottom: 2.5%;
 }
 
-.chilly {
-    color: blue;
+.col-sm-2 {
+    margin: auto;
+    width: 25%;
+    padding: 0 2px;
 }
 
-#forecast2 {
-    margin-left: 20%;
-
-}
-
-#forecast3 {
-    margin-left: 40%;
-
-}
-
-#forecast4 {
-    margin-left: 60%;
-
-}
-
-#forecast5 {
-    margin-left: 80%;
-
+.buttonCity {
+    display: flex;
+    margin: 3%;
 }
