@@ -1,13 +1,24 @@
 body {
-    background: salmon;
+    background: #242943;
+
 }
 
 h1 {
     text-align: center;
+    color: #ffffff;
 }
 
 .container-2 {
     display: flex;
+}
+
+#cityNameAndDate {
+    font-size: 2rem;
+    color: rgb(196, 84, 32);
+}
+
+#searchTitle {
+    font-size: 1.25rem;
 }
 
 #today {
@@ -23,4 +34,5 @@ h1 {
 .buttonCity {
     display: flex;
     margin: 3%;
+    width: 95%;
 }

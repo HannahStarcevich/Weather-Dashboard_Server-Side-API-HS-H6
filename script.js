@@ -11,21 +11,12 @@ if (citiesInLocalStorage) {
     updateRecentSearches()
 }
 
-// display last city searched on page load
-var lastCitySearch = cityArray[cityArray.length - 1]
-$.ajax({
-        url: `https://api.openweathermap.org/data/2.5/forecast?q=${lastCitySearch}&appid=${APIKey}`,
-        method: "GET"
-    })
-    .then(function (response) {
-        console.log(response);
-        displayCurrentWeather(response)
-    });
-
 // display cities recently searched from local storage
 function updateRecentSearches() {
+
     $("#citiesSearched").empty()
-    for (var i = 1; i < 11; i++) {
+    for (var i = 1; i < cityArray.length; i++) {
+
         var recentCity = cityArray[cityArray.length - [i]]
         var displayCities = $("<button>")
         displayCities.addClass("buttonCity btn btn-outline-dark")
@@ -35,6 +26,17 @@ function updateRecentSearches() {
         $("#citiesSearched").append(displayCities)
 
     }
+
+    // display last city searched on page load
+    var lastCitySearch = cityArray[cityArray.length - 1]
+    $.ajax({
+            url: `https://api.openweathermap.org/data/2.5/forecast?q=${lastCitySearch}&appid=${APIKey}`,
+            method: "GET"
+        })
+        .then(function (response) {
+            console.log(response);
+            displayCurrentWeather(response)
+        });
 }
 
 $(document).on("click", ".buttonCity", function () {
@@ -81,10 +83,9 @@ function searchEngine() {
         //add the new city to the city array & sale to local storage
         cityArray.push(city)
         localStorage.setItem("cities", JSON.stringify(cityArray))
+        // call the function to search the new city in the API
+        citySearchAPI()
     }
-
-    // call the function to search the new city in the API
-    citySearchAPI()
 
     $(".searchInput").val("")
 }
